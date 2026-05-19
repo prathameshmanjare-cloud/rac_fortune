@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #FF6B00;
+  --primary-dark: #CC4E00;
+  --primary-light: #FF8C3A;
+  --primary-subtle: #FFF0E5;
+  --secondary: #0B0A0A;
+  --secondary-mid: #2D2D2D;
+  --secondary-light: #5A5A5A;
+  --secondary-muted: #9A9A9A;
+  --gold: #C9A84C;
+  --gold-dark: #8B6914;
+  --gold-light: #E8C96A;
+  --gold-subtle: #FAF3DC;
+  --neutral: #FAF6EF;
+  --neutral-mid: #EDE8DF;
+  --neutral-dark: #C8C0B0;
+  --neutral-deep: #3D3830;
+  --white: #FFFFFF;
+  --text-primary: #0B0A0A;
+  --text-secondary: #2D2D2D;
+  --text-muted: #5A5A5A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--neutral);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .font-display {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .font-marathi {
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .bg-gradient-saffron {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  }
+
+  .bg-gradient-dark {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-mid) 100%);
+  }
+
+  .border-saffron {
+    border-left: 4px solid var(--primary);
+  }
+
+  .border-gold {
+    border-left: 4px solid var(--gold);
+  }
+
+  .shadow-card {
+    box-shadow: 0 4px 20px rgba(11, 10, 10, 0.1);
+  }
+
+  .shadow-card-hover {
+    box-shadow: 0 8px 30px rgba(255, 107, 0, 0.2);
+  }
+
+  .pattern-maratha {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30 Z' fill='none' stroke='%23C9A84C' stroke-width='1' opacity='0.1'/%3E%3C/svg%3E");
+  }
+
+  .pattern-fort {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 80 L20 40 L30 30 L30 20 L70 20 L70 30 L80 40 L80 80 Z' fill='none' stroke='%23C9A84C' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E");
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-gold {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-spin-slow {
+  animation: spin 20s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
