@@ -10,11 +10,7 @@ import LogoSvg from '../../../logo.svg'
 const tagline = 'Service. Leadership. Valor.'
 const taglineLetters = tagline.split('')
 
-const bgImages = [
-  '/images/photos/bg/1.jpeg',
-  '/images/photos/bg/2.jpeg',
-  '/images/photos/bg/3.jpeg',
-]
+const bgImage = '/images/photos/bg/hero-bg.jpeg'
 
 function Hero() {
   const containerRef = useRef(null)
@@ -51,16 +47,13 @@ function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-saffron"
     >
-      <div className="absolute inset-0 sm:grid sm:grid-cols-3 gap-0">
-        {bgImages.map((img, index) => (
-          <div key={index} className={`relative w-full h-full ${index > 0 ? 'hidden sm:block' : ''}`}>
-            <img 
-              src={img} 
-              alt={`Background ${index + 1}`}
-              className="w-full h-full object-cover bg-black/40"
-            />
-          </div>
-        ))}
+      <div className="absolute inset-0">
+        <img
+          src={bgImage}
+          alt="Hero background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/50" />
       </div>
       <div className="absolute inset-0 pattern-maratha opacity-20" />
       <div className="absolute inset-0 pattern-fort opacity-10" />
