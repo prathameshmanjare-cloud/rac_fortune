@@ -34,23 +34,23 @@ const getImage = (id) => {
 const testimonials = [
   {
     id: 1,
-    name: 'Priya Deshmukh',
+    name: 'Piyusha Patil ',
     role: 'President, 2023-24',
     quote: 'Joining RAC Pune City Fortune has transformed me into a leader. The club taught me that true leadership is about serving others.',
     image: getImage(1),
   },
   {
     id: 2,
-    name: 'Rahul Sharma',
+    name: 'Onkar Katkar',
     role: 'Vice President, 2024-25',
     quote: 'The friendships I made and the skills I developed here are invaluable. This is more than just a club.',
     image: getImage(2),
   },
   {
     id: 3,
-    name: 'Anjali Patil',
+    name: 'Miheeka Khair',
     role: 'Director, Community Service',
-    quote: 'Being part of projects like Udaan and Sakhi showed me the power of collective action in creating real change.',
+    quote: 'Being part of projects like Daan Utsav 3.0 and AnokiBhaubeej showed me the power of collective action in creating real change.',
     image: getImage(3),
   },
 ]

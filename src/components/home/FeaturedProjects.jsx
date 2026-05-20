@@ -19,7 +19,7 @@ const projects = [
     avenue: 'Health',
     description: 'Free health check-ups and medical aid for rural communities in Pune district.',
     impact: '2000+ Beneficiaries',
-    image: 'linear-gradient(135deg, #C9A84C 0%, #E8C96A 100%)',
+    image: 'url(/images/photos/community/arogya.png)',
   },
   {
     id: 3,

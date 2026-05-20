@@ -15,7 +15,7 @@ const projects = [
     impact: '500+ Students',
     date: 'Ongoing',
     status: 'active',
-    image: '/images/photos/rac_punecity_fortune_1768559369_3811274689776190906_49805461762.jpg',
+    image: '/images/photos/community/daanutsav.jpg',
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const projects = [
     impact: '2000+ Beneficiaries',
     date: 'Ongoing',
     status: 'active',
-    image: '/images/photos/rac_punecity_fortune_1768667712_3812183533578664878_49805461762.jpg',
+    image: '/images/photos/community/arogya.png',
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const projects = [
     impact: '300+ Women',
     date: 'Ongoing',
     status: 'active',
-    image: '/images/photos/rac_punecity_fortune_1768725426_3812667673214192559_49805461762.jpg',
+    image: '/images/photos/community/anokibhaubij.jpg',
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const projects = [
     impact: '1000+ Trees',
     date: '2023',
     status: 'completed',
-    image: '/images/photos/rac_punecity_fortune_1768838564_3813616748024907016_49805461762.jpg',
+    image: '/images/photos/community/rac_punecity_fortune_1768734808_3812746373741981197_49805461762.jpg',
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ const projects = [
     impact: '200+ Trained',
     date: '2023',
     status: 'completed',
-    image: '/images/photos/rac_punecity_fortune_1768984609_3814841860192248018_49805461762.jpg',
+    image: '/images/photos/community/rac_punecity_fortune_1768984609_3814841860192248018_49805461762.jpg',
   },
   {
     id: 6,
@@ -65,7 +65,7 @@ const projects = [
     impact: '150+ Children',
     date: '2024',
     status: 'active',
-    image: '/images/photos/rac_punecity_fortune_1769087217_3815702595814328160_49805461762.jpg',
+    image: '/images/photos/community/rac_punecity_fortune_1769087217_3815702595814328160_49805461762.jpg',
   },
 ]
 

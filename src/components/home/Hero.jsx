@@ -10,7 +10,7 @@ import LogoSvg from '../../../logo.svg'
 const tagline = 'Service. Leadership. Valor.'
 const taglineLetters = tagline.split('')
 
-const bgImage = '/images/photos/bg/hero-bg.jpeg'
+const bgImage = '/images/photos/bg/hero-bg.png'
 
 function Hero() {
   const containerRef = useRef(null)
@@ -101,9 +101,11 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="text-base sm:text-lg md:text-xl font-semibold text-black max-w-2xl mb-8 sm:mb-12"
+            className="text-base sm:text-lg md:text-xl font-semibold text-white max-w-2xl mb-8 sm:mb-12"
           >
-            Rotaract Club of Pune City Fortune — Carrying the Legacy of Swarajya
+            <span className="text-gold font-display text-3xl text-nowrap">
+              Rotaract Club of Pune City Fortune
+            </span> <br/>Carrying the Legacy of Swarajya
           </motion.p>
 
           <motion.div
