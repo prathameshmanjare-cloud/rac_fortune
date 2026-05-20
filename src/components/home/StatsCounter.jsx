@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import AnimatedCounter from '../shared/AnimatedCounter'
 
 const stats = [
-  { value: 80, suffix: '+', label: 'Members', marathi: 'सदस्य' },
+  { value: 30, suffix: '+', label: 'Members', marathi: 'सदस्य' },
   { value: 50, suffix: '+', label: 'Projects', marathi: 'प्रकल्प' },
   { value: 5000, suffix: '+', label: 'Lives Impacted', marathi: 'जीवित गती' },
   { value: 6, suffix: '', label: 'Years of Service', marathi: 'वर्षे सेवा' },

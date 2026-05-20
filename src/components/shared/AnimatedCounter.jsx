@@ -4,11 +4,13 @@ import { useInView, useReducedMotion } from 'framer-motion'
 function AnimatedCounter({ end, duration = 2, suffix = '', prefix = '', className = '' }) {
   const [count, setCount] = useState(0)
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true })
   const shouldReduceMotion = useReducedMotion()
+  const hasAnimated = useRef(false)
 
   useEffect(() => {
-    if (!isInView) return
+    if (!isInView || hasAnimated.current) return
+    hasAnimated.current = true
 
     if (shouldReduceMotion) {
       setCount(end)
@@ -16,6 +18,7 @@ function AnimatedCounter({ end, duration = 2, suffix = '', prefix = '', classNam
     }
 
     let startTime
+    let rafId
     const startValue = 0
 
     const animate = (timestamp) => {
@@ -28,11 +31,15 @@ function AnimatedCounter({ end, duration = 2, suffix = '', prefix = '', classNam
       setCount(currentValue)
 
       if (progress < 1) {
-        requestAnimationFrame(animate)
+        rafId = requestAnimationFrame(animate)
       }
     }
 
-    requestAnimationFrame(animate)
+    rafId = requestAnimationFrame(animate)
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+    }
   }, [isInView, end, duration, shouldReduceMotion])
 
   return (
