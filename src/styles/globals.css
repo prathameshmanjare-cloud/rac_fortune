@@ -33,6 +33,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -40,6 +41,11 @@ body {
   background-color: var(--neutral);
   color: var(--text-primary);
   overflow-x: hidden;
+}
+
+img, video, svg, iframe {
+  max-width: 100%;
+  height: auto;
 }
 
 ::selection {

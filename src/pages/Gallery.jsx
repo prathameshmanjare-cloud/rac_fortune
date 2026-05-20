@@ -174,21 +174,21 @@ function Gallery() {
               <X className="w-8 h-8" />
             </button>
             <button
-              className="absolute left-4 p-2 text-white hover:bg-white/20 rounded-full"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-2 text-white hover:bg-white/20 rounded-full"
               onClick={(e) => { e.stopPropagation(); prevImage() }}
             >
-              <ChevronLeft className="w-8 h-8" />
+              <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
             </button>
             <button
-              className="absolute right-4 p-2 text-white hover:bg-white/20 rounded-full"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-2 text-white hover:bg-white/20 rounded-full"
               onClick={(e) => { e.stopPropagation(); nextImage() }}
             >
-              <ChevronRight className="w-8 h-8" />
+              <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
             </button>
             <img
               src={filteredPhotos.find(p => p.id === lightbox)?.src}
               alt="Full size"
-              className="max-w-full max-h-full object-contain"
+              className="max-w-[92vw] max-h-[92vh] object-contain"
               onClick={(e) => e.stopPropagation()}
             />
           </motion.div>

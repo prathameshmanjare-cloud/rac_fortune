@@ -64,7 +64,7 @@ function MilestoneTimeline() {
             {milestones.map((milestone, index) => (
               <motion.div
                 key={milestone.year}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
@@ -72,8 +72,8 @@ function MilestoneTimeline() {
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
-                <div className="flex-1 md:w-1/2" />
-                <div className="absolute left-0 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary" />
+                <div className="hidden md:block flex-1 md:w-1/2" />
+                <div className="absolute left-0 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary z-10" />
                 <div className="flex-1 md:w-1/2 pl-8 md:pl-0" >
                   <div className="bg-neutral p-4 rounded-lg shadow-card">
                     <span className="text-primary font-display text-lg">

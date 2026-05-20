@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
-import { ChevronRight, ChevronDown, User, Users, Award, Star } from 'lucide-react'
+import { ChevronRight, ChevronDown, ChevronUp, User, Users, Award, Star } from 'lucide-react'
 
 import Button from '../components/shared/Button'
 
@@ -168,32 +168,32 @@ function JoinUs() {
             </p>
           </motion.div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
-            {journey.map((step, index) => (
-              <div key={step.step} className="flex items-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-center"
-                >
-                  <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-2">
-                    <span className="text-xl font-bold">{step.step}</span>
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0">
+                    {journey.map((step, index) => (
+                      <div key={step.step} className="flex flex-col md:flex-row items-center gap-0 md:gap-0">
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 }}
+                          className="text-center"
+                        >
+                          <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-1 md:mb-2">
+                            <span className="text-lg md:text-xl font-bold">{step.step}</span>
+                          </div>
+                          <div className="text-sm font-medium text-secondary">
+                            {step.title}
+                          </div>
+                          <div className="text-xs text-secondary-light">
+                            {step.description}
+                          </div>
+                        </motion.div>
+                        {index < journey.length - 1 && (
+                          <ChevronRight className="w-6 h-6 md:w-8 md:h-8 text-gold mx-2 rotate-90 md:rotate-0" />
+                        )}
+                      </div>
+                    ))}
                   </div>
-                  <div className="text-sm font-medium text-secondary">
-                    {step.title}
-                  </div>
-                  <div className="text-xs text-secondary-light hidden md:block">
-                    {step.description}
-                  </div>
-                </motion.div>
-                {index < journey.length - 1 && (
-                  <ChevronRight className="w-8 h-8 text-gold mx-2 hidden md:block" />
-                )}
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

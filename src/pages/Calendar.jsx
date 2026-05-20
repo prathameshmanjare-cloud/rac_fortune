@@ -109,7 +109,7 @@ function Calendar() {
                   {weekDays.map((day) => (
                     <div
                       key={day}
-                      className="p-3 text-center text-sm font-semibold text-secondary bg-gold/10"
+                      className="p-2 md:p-3 text-center text-xs md:text-sm font-semibold text-secondary bg-gold/10"
                     >
                       {day}
                     </div>
@@ -126,26 +126,27 @@ function Calendar() {
                     return (
                       <div
                         key={index}
-                        className={`min-h-[80px] p-2 border border-gray-100 ${isSelected ? 'bg-primary/5' : ''} ${!day ? 'bg-gray-50' : ''}`}
+                        className={`min-h-[60px] md:min-h-[80px] p-1 md:p-2 border border-gray-100 ${isSelected ? 'bg-primary/5' : ''} ${!day ? 'bg-gray-50' : ''}`}
                       >
                         {day && (
                           <div className="flex flex-col items-start">
-                            <span className={`text-sm font-medium ${isToday ? 'w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center' : 'text-secondary'}`}>
+                            <span className={`text-xs md:text-sm font-medium ${isToday ? 'w-6 h-6 md:w-7 md:h-7 bg-primary text-white rounded-full flex items-center justify-center' : 'text-secondary'}`}>
                               {day}
                             </span>
-                            <div className="mt-1 space-y-1">
+                            <div className="mt-0.5 md:mt-1 space-y-0.5 md:space-y-1">
                               {dayEvents.slice(0, 2).map((event, i) => (
                                 <button
                                   key={i}
                                   onClick={() => setSelectedEvent(event)}
-                                  className="w-full text-left text-xs px-1 py-0.5 rounded truncate text-white"
+                                  className="w-full text-left text-[10px] md:text-xs px-1 py-0.5 rounded truncate text-white"
                                   style={{ backgroundColor: event.color }}
+                                  title={event.title}
                                 >
                                   {event.title}
                                 </button>
                               ))}
                               {dayEvents.length > 2 && (
-                                <span className="text-xs text-gray-500">+{dayEvents.length - 2} more</span>
+                                <span className="text-[10px] md:text-xs text-gray-500">+{dayEvents.length - 2} more</span>
                               )}
                             </div>
                           </div>

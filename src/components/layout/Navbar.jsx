@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import LogoSvg from '../../../logo.svg'
 
 const navLinks = [
@@ -89,26 +89,36 @@ function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-secondary border-t border-secondary-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 top-16 md:top-20 z-40 lg:hidden"
           >
-            <div className="px-4 py-4 space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`block py-3 px-4 rounded-lg text-sm font-medium transition-colors ${
-                    location.pathname === link.path
-                      ? 'bg-primary text-white'
-                      : 'text-white hover:bg-secondary-mid'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
+            <div className="absolute inset-0 bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="absolute right-0 top-0 bottom-0 w-72 max-w-[85vw] bg-secondary border-l border-secondary-light shadow-2xl overflow-y-auto"
+            >
+              <div className="px-4 py-6 space-y-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`block py-3 px-4 rounded-lg text-sm font-medium transition-colors ${
+                      location.pathname === link.path
+                        ? 'bg-primary text-white'
+                        : 'text-white hover:bg-secondary-mid'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

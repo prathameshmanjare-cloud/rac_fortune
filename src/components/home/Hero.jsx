@@ -51,13 +51,13 @@ function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-saffron"
     >
-      <div className="absolute inset-0 grid grid-cols-3 gap-0">
+      <div className="absolute inset-0 sm:grid sm:grid-cols-3 gap-0">
         {bgImages.map((img, index) => (
-          <div key={index} className="relative w-full h-full">
+          <div key={index} className={`relative w-full h-full ${index > 0 ? 'hidden sm:block' : ''}`}>
             <img 
               src={img} 
               alt={`Background ${index + 1}`}
-              className="w-full h-full object-contain bg-black/40"
+              className="w-full h-full object-cover bg-black/40"
             />
           </div>
         ))}
@@ -66,7 +66,7 @@ function Hero() {
       <div className="absolute inset-0 pattern-fort opacity-10" />
 
       <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-        <svg viewBox="0 0 200 200" className="w-[600px] h-[600px]">
+        <svg viewBox="0 0 200 200" className="w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] lg:w-[600px] lg:h-[600px]">
           <path
             d="M40 160 L40 80 L60 60 L60 40 L140 40 L140 60 L160 80 L160 160 L100 180 Z"
             fill="none"
@@ -92,7 +92,7 @@ function Hero() {
         <div className="flex flex-col items-center text-center">
           <h1
             ref={textRef}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display text-orange-400 mb-4 tracking-wide"
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-display text-orange-400 mb-4 tracking-wide"
           >
             {taglineLetters.map((letter, index) => (
               <span
@@ -108,7 +108,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="text-lg md:text-xl font-semibold text-black max-w-2xl mb-12"
+            className="text-base sm:text-lg md:text-xl font-semibold text-black max-w-2xl mb-8 sm:mb-12"
           >
             Rotaract Club of Pune City Fortune — Carrying the Legacy of Swarajya
           </motion.p>

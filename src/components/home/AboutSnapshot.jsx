@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import LogoSvg from '../../../logo.svg'
 
@@ -12,6 +12,26 @@ const avenues = [
 
 function AboutSnapshot() {
   const [hoveredAvenue, setHoveredAvenue] = useState(null)
+  const orbitRef = useRef(null)
+  const [size, setSize] = useState(0)
+
+  useEffect(() => {
+    const updateSize = () => {
+      if (orbitRef.current) {
+        setSize(orbitRef.current.offsetWidth)
+      }
+    }
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
+
+  const center = size / 2
+  const outerRadius = size * 0.42
+  const innerRadius = size * 0.25
+  const itemSize = Math.max(56, size * 0.18)
+  const centerSize = Math.max(72, size * 0.24)
+  const logoSize = Math.max(50, size * 0.17)
 
   return (
     <section className="py-16 md:py-24 bg-white">
@@ -46,87 +66,94 @@ function AboutSnapshot() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative w-full max-w-[400px] mx-auto aspect-square">
-              <div 
-                className="absolute rounded-full border border-[#C9A84C]/30"
-                style={{
-                  top: '50%',
-                  left: '50%',
-                  width: 360,
-                  height: 360,
-                  transform: 'translate(-50%, -50%)',
-                }}
-              />
+            <div
+              ref={orbitRef}
+              className="relative w-full max-w-[400px] mx-auto aspect-square"
+            >
+              {size > 0 && (
+                <>
+                  <div
+                    className="absolute rounded-full border border-[#C9A84C]/30"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                      width: outerRadius * 2,
+                      height: outerRadius * 2,
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  />
 
-              <div 
-                className="absolute rounded-full border border-dashed border-[#C9A84C]/40"
-                style={{
-                  top: '50%',
-                  left: '50%',
-                  width: 220,
-                  height: 220,
-                  transform: 'translate(-50%, -50%)',
-                }}
-              />
+                  <div
+                    className="absolute rounded-full border border-dashed border-[#C9A84C]/40"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                      width: innerRadius * 2,
+                      height: innerRadius * 2,
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  />
 
-              <motion.div
-                className="absolute inset-0"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                style={{ transformOrigin: '200px 200px' }}
-              >
-                {avenues.map((avenue, index) => {
-                  const radius = 140
-                  const angle = (index * 72 - 90) * (Math.PI / 180)
-                  const x = 200 + radius * Math.cos(angle)
-                  const y = 200 + radius * Math.sin(angle)
-                  return (
-                    <motion.div
-                      key={avenue.name}
-                      className="absolute rounded-full cursor-pointer flex items-center justify-center"
-                      style={{
-                        left: x - 40,
-                        top: y - 40,
-                        width: 80,
-                        height: 80,
-                        background: hoveredAvenue === index ? avenue.color : '#FAF6EF',
-                        border: `3px solid ${avenue.color}`,
-                        boxShadow: hoveredAvenue === index ? `0_0_25px_${avenue.color}` : 'none',
-                      }}
-                      onMouseEnter={() => setHoveredAvenue(index)}
-                      onMouseLeave={() => setHoveredAvenue(null)}
-                      whileHover={{ scale: 1.15 }}
-                    >
-                      <span
-                        className="text-[10px] font-bold"
-                        style={{
-                          color: hoveredAvenue === index ? '#FFF' : avenue.color,
-                          fontFamily: 'Montserrat',
-                        }}
-                      >
-                        {avenue.name}
-                      </span>
-                    </motion.div>
-                  )
-                })}
-              </motion.div>
+                  <motion.div
+                    className="absolute inset-0"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                    style={{ transformOrigin: `${center}px ${center}px` }}
+                  >
+                    {avenues.map((avenue, index) => {
+                      const angle = (index * 72 - 90) * (Math.PI / 180)
+                      const x = center + outerRadius * Math.cos(angle) - itemSize / 2
+                      const y = center + outerRadius * Math.sin(angle) - itemSize / 2
+                      return (
+                        <motion.div
+                          key={avenue.name}
+                          className="absolute rounded-full cursor-pointer flex items-center justify-center"
+                          style={{
+                            left: x,
+                            top: y,
+                            width: itemSize,
+                            height: itemSize,
+                            background: hoveredAvenue === index ? avenue.color : '#FAF6EF',
+                            border: `3px solid ${avenue.color}`,
+                            boxShadow: hoveredAvenue === index ? `0_0_25px_${avenue.color}` : 'none',
+                          }}
+                          onMouseEnter={() => setHoveredAvenue(index)}
+                          onMouseLeave={() => setHoveredAvenue(null)}
+                          whileHover={{ scale: 1.15 }}
+                        >
+                          <span
+                            className="text-[10px] font-bold leading-tight text-center px-1"
+                            style={{
+                              color: hoveredAvenue === index ? '#FFF' : avenue.color,
+                              fontFamily: 'Montserrat',
+                            }}
+                          >
+                            {avenue.name}
+                          </span>
+                        </motion.div>
+                      )
+                    })}
+                  </motion.div>
 
-              <div 
-                className="absolute rounded-full bg-white border-2 border-[#C9A84C] flex items-center justify-center shadow-lg"
-                style={{
-                  top: '50%',
-                  left: '50%',
-                  width: 100,
-                  height: 100,
-                  transform: 'translate(-50%, -50%)',
-                }}
-              >
-                <img
-                  src={LogoSvg}
-                  alt="RAC Logo"
-                  className="w-72 h-72 object-contain"
-                />
-              </div>
+                  <div
+                    className="absolute rounded-full bg-white border-2 border-[#C9A84C] flex items-center justify-center shadow-lg"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                      width: centerSize,
+                      height: centerSize,
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  >
+                    <img
+                      src={LogoSvg}
+                      alt="RAC Logo"
+                      className="object-contain"
+                      style={{ width: logoSize, height: logoSize }}
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
         </div>

@@ -216,42 +216,42 @@ function About() {
                   <img 
                     src="/images/logos/rotary-international.svg" 
                     alt="Rotary International" 
-                    className="h-20 mx-auto mb-2"
+                    className="h-12 sm:h-16 md:h-20 mx-auto mb-2"
                   />
-                <span className="text-secondary font-medium">Rotary International</span>
+                <span className="text-xs sm:text-sm md:text-base text-secondary font-medium">Rotary International</span>
               </div>
 
-              <div className="w-px h-16 bg-gold" />
+              <div className="hidden md:block w-px h-16 bg-gold" />
 
               <div className="text-center">
                   <img 
                     src="/images/logos/district-logo.svg" 
                     alt="District 3131" 
-                    className="h-20 mx-auto mb-2"
+                    className="h-12 sm:h-16 md:h-20 mx-auto mb-2"
                   />
-                <span className="text-secondary font-medium">District 3131</span>
+                <span className="text-xs sm:text-sm md:text-base text-secondary font-medium">District 3131</span>
               </div>
 
-              <div className="w-px h-16 bg-gold" />
+              <div className="hidden md:block w-px h-16 bg-gold" />
 
               <div className="text-center">
                   <img 
                     src="/images/logos/rotary-international.svg" 
                     alt="Rotary Club" 
-                    className="h-16 mx-auto mb-2"
+                    className="h-10 sm:h-14 md:h-16 mx-auto mb-2"
                   />
-                <span className="text-secondary font-medium">Parent Club</span>
+                <span className="text-xs sm:text-sm md:text-base text-secondary font-medium">Parent Club</span>
               </div>
 
-              <div className="w-px h-16 bg-gold" />
+              <div className="hidden md:block w-px h-16 bg-gold" />
 
               <div className="text-center">
                   <img 
                     src={LogoSvg}
                     alt="RAC" 
-                    className="h-20 mx-auto mb-2"
+                    className="h-12 sm:h-16 md:h-20 mx-auto mb-2"
                   />
-                <span className="text-secondary font-medium">RAC Pune City Fortune</span>
+                <span className="text-xs sm:text-sm md:text-base text-secondary font-medium">RAC Pune City Fortune</span>
               </div>
             </motion.div>
           </div>
