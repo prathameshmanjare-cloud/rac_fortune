@@ -10,7 +10,6 @@ const navLinks = [
   { name: 'Projects', path: '/projects' },
   { name: 'Calendar', path: '/calendar' },
   { name: 'Join Us', path: '/join' },
-  { name: 'Partner', path: '/partner' },
   { name: 'Gallery', path: '/gallery' },
   { name: 'Contact', path: '/contact' },
 ]
@@ -70,6 +69,16 @@ function Navbar() {
                 {link.name}
               </Link>
             ))}
+            <Link
+              to="/partner"
+              className={`text-sm font-semibold px-4 py-2 rounded-lg border transition-all ${
+                location.pathname === '/partner'
+                  ? 'bg-gold text-secondary border-gold'
+                  : 'text-gold border-gold/60 hover:bg-gold hover:text-secondary'
+              }`}
+            >
+              CSR Partnership
+            </Link>
           </div>
 
           <button
@@ -117,6 +126,16 @@ function Navbar() {
                     {link.name}
                   </Link>
                 ))}
+                <Link
+                  to="/partner"
+                  className={`block py-3 px-4 mt-2 rounded-lg text-sm font-semibold text-center transition-colors ${
+                    location.pathname === '/partner'
+                      ? 'bg-gold text-secondary'
+                      : 'bg-gold/15 text-gold border border-gold/40 hover:bg-gold hover:text-secondary'
+                  }`}
+                >
+                  CSR Partnership →
+                </Link>
               </div>
             </motion.div>
           </motion.div>

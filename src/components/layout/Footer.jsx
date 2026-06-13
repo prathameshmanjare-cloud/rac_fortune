@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
-import { Instagram, Linkedin, Youtube, Mail, MapPin, Phone } from 'lucide-react'
+import { Instagram, Linkedin, Youtube, Mail, MapPin, Phone, Download } from 'lucide-react'
 import LogoSvg from '../../../logo.svg'
+import Button from '../shared/Button'
 
 const footerLinks = {
   quickLinks: [
@@ -9,10 +10,11 @@ const footerLinks = {
     { name: 'Events', path: '/events' },
     { name: 'Gallery', path: '/gallery' },
   ],
-  connect: [
-    { name: 'Join Us', path: '/join' },
-    { name: 'Partner With Us', path: '/partner' },
-    { name: 'Contact', path: '/contact' },
+  csr: [
+    { name: 'CSR Partnership', path: '/partner' },
+    { name: 'Focus Areas', path: '/partner#resources' },
+    { name: 'Fund Transparency', path: '/partner#resources' },
+    { name: 'Partnership Enquiry', path: '/partner#enquiry' },
   ],
 }
 
@@ -65,16 +67,20 @@ function Footer() {
           </div>
 
           <div>
-            <h4 className="text-gold font-semibold mb-4">Connect</h4>
-            <ul className="space-y-2">
-              {footerLinks.connect.map((link) => (
-                <li key={link.path}>
+            <h4 className="text-gold font-semibold mb-4">For Corporates</h4>
+            <ul className="space-y-2 mb-5">
+              {footerLinks.csr.map((link) => (
+                <li key={link.name}>
                   <Link to={link.path} className="text-secondary-light text-sm hover:text-primary transition-colors">
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
+            {/* PLACEHOLDER - link to real brochure PDF */}
+            <Button href="/partner#resources" variant="secondary" className="!px-4 !py-2 text-xs">
+              <Download className="w-4 h-4" /> Download Brochure
+            </Button>
           </div>
 
           <div>

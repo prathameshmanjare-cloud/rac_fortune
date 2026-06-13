@@ -5,7 +5,14 @@ import gsap from 'gsap'
 import { ChevronDown } from 'lucide-react'
 
 import Button from '../shared/Button'
+import AnimatedCounter from '../shared/AnimatedCounter'
 import LogoSvg from '../../../logo.svg'
+
+const heroImpact = [
+  { value: 5000, suffix: '+', label: 'Lives Impacted' },
+  { value: 50, suffix: '+', label: 'Projects Completed' },
+  { value: 25, prefix: '₹', suffix: 'L+', label: 'Funds Utilised' },
+]
 
 const tagline = 'Service. Leadership. Valor.'
 const taglineLetters = tagline.split('')
@@ -105,7 +112,7 @@ function Hero() {
           >
             <span className="text-gold font-display text-3xl text-nowrap">
               Rotaract Club of Pune City Fortune
-            </span> <br/>Carrying the Legacy of Swarajya
+            </span> <br/>Driving Social Change Through Youth Leadership
           </motion.p>
 
           <motion.div
@@ -116,14 +123,31 @@ function Hero() {
           >
             <Link to="/join">
               <Button variant="primary" className="w-full sm:w-auto">
-                Join the Mission →
+                Join Us →
               </Button>
             </Link>
             <Link to="/partner">
               <Button variant="secondary" className="w-full sm:w-auto">
-                Support Our Cause →
+                Partner With Us →
               </Button>
             </Link>
+          </motion.div>
+
+          {/* Animated impact counter overlay */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.7 }}
+            className="grid grid-cols-3 gap-3 sm:gap-8 mt-12 sm:mt-16 w-full max-w-2xl bg-white/5 backdrop-blur-sm border border-gold/20 rounded-2xl px-4 py-5 sm:px-8 sm:py-6"
+          >
+            {heroImpact.map((s) => (
+              <div key={s.label} className="text-center">
+                <div className="text-xl sm:text-3xl md:text-4xl font-display text-gold">
+                  <AnimatedCounter end={s.value} prefix={s.prefix || ''} suffix={s.suffix} />
+                </div>
+                <div className="text-[10px] sm:text-xs text-white/70 mt-1">{s.label}</div>
+              </div>
+            ))}
           </motion.div>
         </div>
       </div>

@@ -1,39 +1,66 @@
-import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react'
+import { useReducedMotion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { HeartHandshake, IndianRupee, Trees, Clock, CheckCircle2 } from 'lucide-react'
 
 import AnimatedCounter from '../shared/AnimatedCounter'
+import SectionHeader from '../shared/SectionHeader'
+import { impactStats } from '../../data/placeholder'
 
-const stats = [
-  { value: 30, suffix: '+', label: 'Members', marathi: 'सदस्य' },
-  { value: 50, suffix: '+', label: 'Projects', marathi: 'प्रकल्प' },
-  { value: 5000, suffix: '+', label: 'Lives Impacted', marathi: 'जीवित गती' },
-  { value: 6, suffix: '', label: 'Years of Service', marathi: 'वर्षे सेवा' },
-]
+gsap.registerPlugin(ScrollTrigger)
+
+const iconMap = { HeartHandshake, IndianRupee, Trees, Clock, CheckCircle2 }
 
 function StatsCounter() {
+  const gridRef = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    if (shouldReduceMotion || !gridRef.current) return
+    const cards = gridRef.current.querySelectorAll('.stat-card')
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cards,
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: gridRef.current, start: 'top 80%' },
+        }
+      )
+    }, gridRef)
+    return () => ctx.revert()
+  }, [shouldReduceMotion])
+
   return (
-    <section id="stats" className="py-16 md:py-24 bg-neutral">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white p-6 rounded-lg shadow-card border-l-4 border-gold hover:shadow-card-hover transition-shadow"
-            >
-              <div className="text-3xl md:text-4xl lg:text-5xl font-display text-primary mb-1">
-                <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+    <section id="stats" className="py-16 md:py-24 bg-neutral relative overflow-hidden">
+      <div className="absolute inset-0 pattern-maratha opacity-[0.04]" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+        <SectionHeader title="Our Impact in Numbers" subtitle="परिणाम — Measurable Change" />
+        <div ref={gridRef} className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+          {impactStats.map((stat) => {
+            const Icon = iconMap[stat.icon]
+            return (
+              <div
+                key={stat.id}
+                className="stat-card group bg-white p-6 rounded-2xl shadow-card border border-transparent hover:border-gold hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 text-center"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary-subtle flex items-center justify-center mx-auto mb-4 group-hover:bg-primary transition-colors">
+                  {Icon && <Icon className="w-6 h-6 text-primary group-hover:text-white transition-colors" />}
+                </div>
+                <div className="text-2xl md:text-3xl lg:text-4xl font-display text-primary">
+                  <AnimatedCounter end={stat.value} prefix={stat.prefix || ''} suffix={stat.suffix} />
+                </div>
+                <div className="h-0.5 w-10 bg-gold mx-auto my-2.5" />
+                <div className="text-xs md:text-sm text-secondary font-semibold">{stat.label}</div>
+                <div className="text-[11px] text-gold font-marathi">{stat.marathi}</div>
               </div>
-              <div className="text-sm md:text-base text-secondary font-medium">
-                {stat.label}
-              </div>
-              <div className="text-xs md:text-sm text-gold font-marathi">
-                {stat.marathi}
-              </div>
-            </motion.div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>

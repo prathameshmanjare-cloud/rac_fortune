@@ -1,5 +1,6 @@
 import Hero from '../components/home/Hero'
 import StatsCounter from '../components/home/StatsCounter'
+import RecognitionStrip from '../components/home/RecognitionStrip'
 import AboutSnapshot from '../components/home/AboutSnapshot'
 import FeaturedProjects from '../components/home/FeaturedProjects'
 import InstagramGrid from '../components/home/InstagramGrid'
@@ -12,6 +13,7 @@ function Home() {
     <>
       <Hero />
       <StatsCounter />
+      <RecognitionStrip />
       <AboutSnapshot />
       <FeaturedProjects />
       <InstagramGrid />
