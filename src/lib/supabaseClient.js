@@ -5,13 +5,17 @@ import { createClient } from '@supabase/supabase-js'
 const url = import.meta.env.VITE_SUPABASE_URL
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-if (!url || !anonKey) {
+export const hasSupabaseConfig = Boolean(url && anonKey)
+
+if (!hasSupabaseConfig) {
   // Helps catch missing env during dev/build
   console.warn('Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY — admin login + CMS will not work.')
 }
 
-export const supabase = createClient(url || '', anonKey || '', {
-  auth: { persistSession: true, autoRefreshToken: true },
-})
-
-export const hasSupabaseConfig = Boolean(url && anonKey)
+// Use harmless placeholders if env is missing so createClient() doesn't throw
+// and crash the public site. Real calls are gated behind hasSupabaseConfig.
+export const supabase = createClient(
+  url || 'https://placeholder.supabase.co',
+  anonKey || 'placeholder-anon-key',
+  { auth: { persistSession: true, autoRefreshToken: true } },
+)
