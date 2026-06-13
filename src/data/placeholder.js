@@ -244,28 +244,30 @@ export const recognitions = [
 // TEAM — Core Team & Board of Directors (2024-25)
 // PLACEHOLDER - add photos to /public/images/team/ and set `photo`
 // ============================================================
+// Order matters — Team page renders core in rows of 1 / 2 / 3 / 2
 export const coreTeam = [
-  { name: 'Rtr. Piyusha', role: 'IPP', title: 'Immediate Past President', photo: null },
-  { name: 'Rtr. Prathamesh', role: 'President', title: 'President', photo: null },
-  { name: 'Rtr. Purva', role: 'Vice-President', title: 'Vice-President', photo: null },
-  { name: 'Rtr. Miheeka', role: 'Secretary', title: 'Secretary', photo: null },
-  { name: 'Rtr. Vidhi', role: 'Joint Secretary', title: 'Joint Secretary', photo: null },
-  { name: 'Rtr. Sanjyot', role: 'Treasurer', title: 'Treasurer', photo: null },
-  { name: 'Rtr. Omkar', role: 'Financial Advisor', title: 'Financial Advisor', photo: null },
+  { name: 'To Be Announced', role: 'Foundation Chair', title: 'Foundation Chair', photo: null, thought: '' }, // PLACEHOLDER - name pending
+  { name: 'Rtr. Prathamesh', role: 'President', title: 'President', photo: null, thought: 'Together we turn Swarajya into action.' },
+  { name: 'Rtr. Piyusha', role: 'IPP', title: 'Immediate Past President', photo: null, thought: 'Leadership is service made visible.' },
+  { name: 'Rtr. Purva', role: 'Vice-President', title: 'Vice-President', photo: null, thought: 'Every project begins with one bold step.' },
+  { name: 'Rtr. Miheeka', role: 'Secretary', title: 'Secretary', photo: null, thought: 'Details done with heart change lives.' },
+  { name: 'Rtr. Vidhi', role: 'Joint Secretary', title: 'Joint Secretary', photo: null, thought: 'Service is the rent we pay for our space on earth.' },
+  { name: 'Rtr. Sanjyot', role: 'Treasurer', title: 'Treasurer', photo: null, thought: 'Trust is built one transparent rupee at a time.' },
+  { name: 'Rtr. Omkar', role: 'Financial Advisor', title: 'Financial Advisor', photo: null, thought: 'Sound plans power lasting impact.' },
 ]
 
 export const boardOfDirectors = [
-  { name: 'To Be Announced', role: 'CMD + DEI', title: 'Club Master Director & DEI', photo: null }, // PLACEHOLDER - name pending
-  { name: 'Rtr. Vidhi', role: 'PDD', title: 'Professional Development Director', photo: null },
-  { name: 'Rtr. Neel', role: 'CSD', title: 'Community Service Director', photo: null },
-  { name: 'Rtr. Anuj', role: 'ISD', title: 'International Service Director', photo: null },
-  { name: 'Rtr. Harshal', role: 'Co-ISD', title: 'Co-International Service Director', photo: null },
-  { name: 'Rtr. Darshana', role: 'Editor', title: 'Editor', photo: null },
-  { name: 'Rtr. Digvijay', role: 'PRO', title: 'Public Relations Officer', photo: null },
-  { name: 'Rtr. Neel', role: 'Co-PRO', title: 'Co-Public Relations Officer', photo: null },
-  { name: 'Rtr. Anuj', role: 'WRWC', title: 'WRWC', photo: null },
-  { name: 'Rtr. Vaibhav', role: 'RRRO + IRRO', title: 'RRRO & IRRO', photo: null },
-  { name: 'Rtr. Jayesh', role: 'SAA', title: 'Sergeant-at-Arms', photo: null },
+  { name: 'Rtr. Jayesh', role: 'SAA', title: 'Sergeant-at-Arms', photo: null, thought: '' },
+  { name: 'To Be Announced', role: 'CMD + DEI', title: 'Club Master Director & DEI', photo: null, thought: '' }, // PLACEHOLDER - name pending
+  { name: 'Rtr. Vidhi', role: 'PDD', title: 'Professional Development Director', photo: null, thought: '' },
+  { name: 'Rtr. Neel', role: 'CSD', title: 'Community Service Director', photo: null, thought: '' },
+  { name: 'Rtr. Anuj', role: 'ISD', title: 'International Service Director', photo: null, thought: '' },
+  { name: 'Rtr. Harshal', role: 'Co-ISD', title: 'Co-International Service Director', photo: null, thought: '' },
+  { name: 'Rtr. Darshana', role: 'Editor', title: 'Editor', photo: null, thought: '' },
+  { name: 'Rtr. Digvijay', role: 'PRO', title: 'Public Relations Officer', photo: null, thought: '' },
+  { name: 'Rtr. Neel', role: 'Co-PRO', title: 'Co-Public Relations Officer', photo: null, thought: '' },
+  { name: 'Rtr. Anuj', role: 'WRWC', title: 'WRWC', photo: null, thought: '' },
+  { name: 'Rtr. Vaibhav', role: 'RRRO + IRRO', title: 'RRRO & IRRO', photo: null, thought: '' },
 ]
 
 // CSR enquiry form options

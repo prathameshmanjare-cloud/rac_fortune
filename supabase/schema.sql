@@ -71,3 +71,72 @@ create policy "authenticated can read csr"
   for select
   to authenticated
   using (true);
+
+-- Authenticated admins can delete submissions
+drop policy if exists "authenticated can delete join_us" on public.join_us_submissions;
+create policy "authenticated can delete join_us"
+  on public.join_us_submissions for delete to authenticated using (true);
+
+drop policy if exists "authenticated can delete csr" on public.csr_partnership_submissions;
+create policy "authenticated can delete csr"
+  on public.csr_partnership_submissions for delete to authenticated using (true);
+
+-- ============================================================
+-- CMS content store
+-- One row per editable section, value is JSON (object or array).
+-- Public site reads it (anon SELECT); only authenticated admins write.
+-- ============================================================
+create table if not exists public.site_content (
+  key text primary key,
+  value jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.site_content enable row level security;
+
+drop policy if exists "anyone can read site_content" on public.site_content;
+create policy "anyone can read site_content"
+  on public.site_content for select to anon, authenticated using (true);
+
+drop policy if exists "authenticated can write site_content" on public.site_content;
+create policy "authenticated can write site_content"
+  on public.site_content for all to authenticated using (true) with check (true);
+
+-- keep updated_at fresh
+create or replace function public.touch_site_content() returns trigger as $$
+begin new.updated_at = now(); return new; end;
+$$ language plpgsql;
+
+drop trigger if exists trg_touch_site_content on public.site_content;
+create trigger trg_touch_site_content
+  before update on public.site_content
+  for each row execute function public.touch_site_content();
+
+-- ============================================================
+-- Storage: public "media" bucket for CMS image uploads
+-- (team photos, project images, partner logos)
+-- ============================================================
+insert into storage.buckets (id, name, public)
+values ('media', 'media', true)
+on conflict (id) do update set public = true;
+
+-- Public can read files; authenticated admins can upload/update/delete.
+drop policy if exists "public read media" on storage.objects;
+create policy "public read media"
+  on storage.objects for select to anon, authenticated
+  using (bucket_id = 'media');
+
+drop policy if exists "auth upload media" on storage.objects;
+create policy "auth upload media"
+  on storage.objects for insert to authenticated
+  with check (bucket_id = 'media');
+
+drop policy if exists "auth update media" on storage.objects;
+create policy "auth update media"
+  on storage.objects for update to authenticated
+  using (bucket_id = 'media') with check (bucket_id = 'media');
+
+drop policy if exists "auth delete media" on storage.objects;
+create policy "auth delete media"
+  on storage.objects for delete to authenticated
+  using (bucket_id = 'media');

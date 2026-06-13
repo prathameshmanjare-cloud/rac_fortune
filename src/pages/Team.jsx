@@ -1,11 +1,14 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Sparkles, Crown } from 'lucide-react'
+import { Sparkles, Crown, Quote } from 'lucide-react'
 
 import SectionHeader from '../components/shared/SectionHeader'
-import { coreTeam, boardOfDirectors } from '../data/placeholder'
+import { useContent } from '../context/ContentContext'
 
-// Member card with photo fallback to gradient initials avatar
-function MemberCard({ member, index, highlight }) {
+// Flip card: front = photo + name + role, back = title + thought.
+// Flips on hover (desktop) and on tap (touch).
+function MemberCard({ member, index, highlight, className = '' }) {
+  const [flipped, setFlipped] = useState(false)
   const initials = member.name
     .replace(/^Rtr\.?\s*/i, '')
     .split(' ')
@@ -19,36 +22,67 @@ function MemberCard({ member, index, highlight }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: (index % 6) * 0.06 }}
-      className="group bg-white rounded-2xl p-6 text-center shadow-card border border-transparent hover:border-gold hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300"
+      className={`group perspective h-64 sm:h-72 cursor-pointer ${className}`}
+      onClick={() => setFlipped((f) => !f)}
     >
-      <div className="relative w-24 h-24 mx-auto mb-4">
-        <div className={`w-full h-full rounded-full overflow-hidden border-4 ${highlight ? 'border-gold' : 'border-neutral-mid group-hover:border-gold'} transition-colors`}>
-          {member.photo ? (
-            <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
-          ) : (
-            <div className="w-full h-full bg-gradient-saffron flex items-center justify-center text-white text-2xl font-display">
-              {initials}
+      <div
+        className={`relative w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180 ${flipped ? 'rotate-y-180' : ''}`}
+      >
+        {/* FRONT */}
+        <div className="absolute inset-0 backface-hidden bg-white rounded-2xl p-6 text-center shadow-card border border-gold/20 flex flex-col items-center justify-center">
+          <div className="relative w-24 h-24 mx-auto mb-4">
+            <div className={`w-full h-full rounded-full overflow-hidden border-4 ${highlight ? 'border-gold' : 'border-neutral-mid'}`}>
+              {member.photo ? (
+                <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gradient-saffron flex items-center justify-center text-white text-2xl font-display">
+                  {initials}
+                </div>
+              )}
             </div>
-          )}
+            {highlight && (
+              <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-gold flex items-center justify-center">
+                <Crown className="w-4 h-4 text-secondary" />
+              </span>
+            )}
+          </div>
+          <h3 className="text-lg font-semibold text-secondary">{member.name}</h3>
+          <p className="text-primary text-sm font-semibold mt-0.5">{member.role}</p>
         </div>
-        {highlight && (
-          <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-gold flex items-center justify-center">
-            <Crown className="w-4 h-4 text-secondary" />
-          </span>
-        )}
+
+        {/* BACK */}
+        <div className="absolute inset-0 backface-hidden rotate-y-180 bg-secondary rounded-2xl p-6 text-center shadow-card-hover border border-gold/40 flex flex-col items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 pattern-maratha opacity-10" />
+          <div className="relative">
+            <p className="text-gold font-semibold text-sm mb-1">{member.name}</p>
+            <p className="text-white/60 text-xs mb-4">{member.title}</p>
+            <Quote className="w-6 h-6 text-gold/50 mx-auto mb-2" />
+            <p className="text-white/90 text-sm italic leading-relaxed line-clamp-5">
+              {member.thought || 'Serving with Swarajya, Seva and Parakram.'}
+            </p>
+          </div>
+        </div>
       </div>
-      <h3 className="text-lg font-semibold text-secondary group-hover:text-primary transition-colors">
-        {member.name}
-      </h3>
-      <p className="text-primary text-sm font-semibold mt-0.5">{member.role}</p>
-      {member.title !== member.role && (
-        <p className="text-secondary-light text-xs mt-1">{member.title}</p>
-      )}
     </motion.div>
   )
 }
 
+// Split a flat list into rows of the given sizes; leftovers go in a final row.
+function chunkByCounts(items, counts) {
+  const rows = []
+  let i = 0
+  for (const c of counts) {
+    if (i >= items.length) break
+    rows.push(items.slice(i, i + c))
+    i += c
+  }
+  if (i < items.length) rows.push(items.slice(i))
+  return rows
+}
+
 function Team() {
+  const coreTeam = useContent('core_team')
+  const boardOfDirectors = useContent('board_of_directors')
   return (
     <>
       {/* HERO */}
@@ -75,9 +109,19 @@ function Team() {
         <div className="absolute inset-0 pattern-fort opacity-[0.04]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <SectionHeader title="Core Team" subtitle="मुख्य संघ — Office Bearers" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6">
-            {coreTeam.map((m, i) => (
-              <MemberCard key={`${m.name}-${m.role}`} member={m} index={i} highlight={m.role === 'President'} />
+          <div className="space-y-5 md:space-y-6">
+            {chunkByCounts(coreTeam, [2, 3, 3]).map((row, ri) => (
+              <div key={ri} className="flex flex-wrap justify-center gap-5 md:gap-6">
+                {row.map((m, i) => (
+                  <MemberCard
+                    key={`${m.name}-${m.role}`}
+                    member={m}
+                    index={i}
+                    highlight={m.role === 'President'}
+                    className="w-[calc(50%-0.625rem)] sm:w-56"
+                  />
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -88,7 +132,7 @@ function Team() {
         <div className="absolute inset-0 pattern-maratha opacity-[0.04]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <SectionHeader title="Board of Directors" subtitle="संचालक मंडळ — Avenue Directors" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-5 md:gap-6">
             {boardOfDirectors.map((m, i) => (
               <MemberCard key={`${m.name}-${m.role}`} member={m} index={i} />
             ))}

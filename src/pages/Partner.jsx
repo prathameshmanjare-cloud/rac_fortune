@@ -11,9 +11,10 @@ import SectionHeader from '../components/shared/SectionHeader'
 import AnimatedCounter from '../components/shared/AnimatedCounter'
 import FundCharts from '../components/partner/FundCharts'
 import TestimonialTabs from '../components/shared/TestimonialTabs'
+import { useContent } from '../context/ContentContext'
 import {
-  trustSignals, csrFocusAreas, csrResources, corporatePartners, csrModels,
-  recognitions, impactStats, csrBudgetRanges, csrInterestAreas,
+  trustSignals, csrFocusAreas, csrResources, csrModels,
+  recognitions, csrBudgetRanges, csrInterestAreas,
 } from '../data/placeholder'
 
 // Icon name -> component map (data keeps strings for easy editing)
@@ -22,6 +23,8 @@ const icons = {
 }
 
 function Partner() {
+  const corporatePartners = useContent('corporate_partners')
+  const impactStats = useContent('impact_stats')
   const { register, handleSubmit, reset, formState: { errors } } = useForm()
   const [status, setStatus] = useState({ state: 'idle', message: '' }) // idle | submitting | success | error
   const submitting = status.state === 'submitting'

@@ -2,15 +2,14 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Quote } from 'lucide-react'
 
-import { beneficiaryTestimonials, corporateTestimonials } from '../../data/placeholder'
-
-const tabs = [
-  { id: 'beneficiary', label: 'Beneficiaries', data: beneficiaryTestimonials },
-  { id: 'corporate', label: 'Corporate Partners', data: corporateTestimonials },
-]
+import { useContent } from '../../context/ContentContext'
 
 function TestimonialTabs() {
   const [active, setActive] = useState('beneficiary')
+  const tabs = [
+    { id: 'beneficiary', label: 'Beneficiaries', data: useContent('beneficiary_testimonials') },
+    { id: 'corporate', label: 'Corporate Partners', data: useContent('corporate_testimonials') },
+  ]
   const activeTab = tabs.find((t) => t.id === active)
 
   return (

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, MapPin, FileBarChart } from 'lucide-react'
 
 import SectionHeader from '../shared/SectionHeader'
+import { useContent } from '../../context/ContentContext'
 
 // Category -> badge color
 const categoryColors = {
@@ -12,37 +13,8 @@ const categoryColors = {
   Environment: 'bg-green-600 text-white',
 }
 
-const projects = [
-  {
-    id: 1,
-    name: 'Daan Utsav',
-    avenue: 'Education',
-    location: 'Pune, MH',
-    description: 'Empowering underprivileged children with quality education and learning materials.',
-    impact: '2000+ Students Per Year',
-    image: 'url(/images/photos/community/daanutsav.jpg)',
-  },
-  {
-    id: 2,
-    name: 'Arogya',
-    avenue: 'Health',
-    location: 'Pune District',
-    description: 'Free health check-ups and medical aid for rural communities in Pune district.',
-    impact: '2000+ Beneficiaries',
-    image: 'url(/images/photos/community/arogya.png)',
-  },
-  {
-    id: 3,
-    name: 'Anokhi Bhaubijee',
-    avenue: 'Community',
-    location: 'Pune, MH',
-    description: 'Women empowerment initiative providing skills and employment.',
-    impact: '300+ Women',
-    image: 'url(/images/photos/community/anokibhaubij.jpg)',
-  },
-]
-
 function FeaturedProjects() {
+  const projects = useContent('featured_projects')
   const containerVariants = {
     hidden: {},
     visible: {
@@ -80,7 +52,7 @@ function FeaturedProjects() {
             >
               <div
                 className="h-44 md:h-52 relative overflow-hidden"
-                style={{ background: project.image, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                style={{ backgroundImage: `url(${project.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute top-4 left-4 flex gap-2">

@@ -84,6 +84,52 @@ Project → **Settings → Environment Variables** → add each (Production + Pr
 - [ ] `/admin` loads with password, lists rows, CSV exports.
 - [ ] Deployed to Vercel with all env vars set.
 
+---
+
+# Admin CMS (Supabase Auth)
+
+`/admin` is now a full dashboard: **Submissions · Content · Email · Settings**, gated by
+Supabase Auth (real email+password login, password change built in).
+
+## One-time setup
+
+1. **Run the updated schema** — re-run [`supabase/schema.sql`](supabase/schema.sql) in the SQL Editor.
+   Adds `site_content` (CMS store), delete policies, and public-read policy.
+2. **Add the anon key** — Supabase → Settings → API → copy **anon public** key. Put in `.env.local`:
+   ```
+   VITE_SUPABASE_URL='https://gfosfpzwnaialvffooda.supabase.co'
+   VITE_SUPABASE_ANON_KEY='<anon public key>'
+   ```
+   Also add both in **Vercel → Settings → Environment Variables**.
+   ⚠️ `VITE_*` vars are baked at **build time** — set them in Vercel *before* redeploying.
+3. **Create your admin user** — Supabase → Authentication → Users → **Add user** →
+   enter your email + password → enable **Auto Confirm User**. That's your `/admin` login.
+   (Add more users the same way; anyone with an account is an admin.)
+4. Restart `vercel dev`, go to `/admin`, sign in.
+
+## What each tab does
+
+- **Submissions** — Join Us + CSR entries (read live from Supabase), delete, export CSV,
+  ✉️ icon jumps to Email pre-filled with that person's address.
+- **Content** — edit site sections (Impact Stats, Featured Projects, Core Team, Board,
+  Testimonials, Corporate Partners). Add/remove/edit items → **Save** → live site updates.
+  **Reset** restores the original built-in content. Stored as JSON in `site_content`;
+  the public site falls back to `placeholder.js` defaults if a section was never edited.
+- **Email** — compose + send an email to anyone via Resend (uses your verified domain).
+- **Settings** — shows your account, lets you change your password.
+
+## How content flows
+
+`src/context/ContentContext.jsx` fetches `site_content` on load, merges over defaults, and
+exposes `useContent('<key>')`. Wired components: StatsCounter, FeaturedProjects, Team,
+TestimonialTabs, Partner (partners + impact band). To make a new section editable: add a
+default to `CONTENT_DEFAULTS`, a schema entry in `ContentPanel.jsx`, and `useContent` in the component.
+
+> The old `/api/admin-submissions.js` (env-password read) is now unused — Submissions read
+> directly via the logged-in session + RLS. Safe to delete.
+
+---
+
 ## Field → column mapping
 
 **Join Us:** full_name, email, phone, college_or_organization, why_join, area_of_interest

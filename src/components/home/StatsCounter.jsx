@@ -6,13 +6,14 @@ import { HeartHandshake, IndianRupee, Trees, Clock, CheckCircle2 } from 'lucide-
 
 import AnimatedCounter from '../shared/AnimatedCounter'
 import SectionHeader from '../shared/SectionHeader'
-import { impactStats } from '../../data/placeholder'
+import { useContent } from '../../context/ContentContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const iconMap = { HeartHandshake, IndianRupee, Trees, Clock, CheckCircle2 }
 
 function StatsCounter() {
+  const impactStats = useContent('impact_stats')
   const gridRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
 
