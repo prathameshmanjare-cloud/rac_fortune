@@ -1,4 +1,4 @@
-import { getSupabase, getResend, emailShell, methodGuard, requireFields } from './_lib/clients.js'
+import { getSupabase, getResend, emailShell, thankYouEmail, methodGuard, requireFields } from './_lib/clients.js'
 
 export default async function handler(req, res) {
   if (!methodGuard(req, res)) return
@@ -27,11 +27,14 @@ export default async function handler(req, res) {
       return res.status(500).json({ ok: false, error: 'Could not save your application. Please try again.' })
     }
 
-    // Email notification (non-fatal if it fails — data is already saved)
+    // Emails (non-fatal if they fail — data is already saved)
+    const from = process.env.RESEND_FROM || 'RAC Pune City Fortune <onboarding@resend.dev>'
     try {
       const resend = getResend()
+
+      // 1) Notify the club
       await resend.emails.send({
-        from: process.env.RESEND_FROM || 'RAC Pune City Fortune <onboarding@resend.dev>',
+        from,
         to: process.env.NOTIFICATION_EMAIL,
         replyTo: record.email,
         subject: `New Join Us Application — ${record.full_name}`,
@@ -43,6 +46,23 @@ export default async function handler(req, res) {
           ['Area of Interest', record.area_of_interest],
           ['Why Join', record.why_join],
         ]),
+      })
+
+      // 2) Acknowledge the applicant
+      await resend.emails.send({
+        from,
+        to: record.email,
+        replyTo: process.env.NOTIFICATION_EMAIL,
+        subject: 'Thank You for Applying — RAC Pune City Fortune',
+        html: thankYouEmail({
+          name: record.full_name,
+          title: 'Application Received',
+          intro: 'Thank you for applying to join Rotaract Club of Pune City Fortune. We have received your application.',
+          paragraphs: [
+            'Our team will review your details and reach out to you soon regarding the next steps in the membership journey.',
+            'In the meantime, follow us on social media to see our latest projects and impact.',
+          ],
+        }),
       })
     } catch (mailErr) {
       console.error('Resend error (non-fatal):', mailErr)
