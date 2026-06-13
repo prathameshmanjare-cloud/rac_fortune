@@ -1,8 +1,9 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import {
   ShieldCheck, Award, FileText, Download, ArrowRight, CheckCircle2, Building2,
-  GraduationCap, Stethoscope, Leaf, Briefcase, Users, HandHeart, Sparkles,
+  GraduationCap, Stethoscope, Leaf, Briefcase, Users, HandHeart, Sparkles, AlertCircle,
 } from 'lucide-react'
 
 import Button from '../components/shared/Button'
@@ -21,12 +22,34 @@ const icons = {
 }
 
 function Partner() {
-  const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm()
+  const { register, handleSubmit, reset, formState: { errors } } = useForm()
+  const [status, setStatus] = useState({ state: 'idle', message: '' }) // idle | submitting | success | error
+  const submitting = status.state === 'submitting'
 
-  const onSubmit = (data) => {
-    console.log('CSR enquiry:', data) // PLACEHOLDER - wire to backend / email service
-    alert('Thank you! Our partnerships team will reach out within 48 hours.')
-    reset()
+  const onSubmit = async (data) => {
+    setStatus({ state: 'submitting', message: '' })
+    try {
+      const res = await fetch('/api/csr-partnership', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          company_name: data.company,
+          contact_person: data.contact,
+          designation: data.designation,
+          email: data.email,
+          phone: data.phone,
+          csr_budget_range: data.budget,
+          area_of_interest: data.interest,
+          message: data.message,
+        }),
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok || !json.ok) throw new Error(json.error || 'Something went wrong.')
+      setStatus({ state: 'success', message: 'Enquiry sent! Our partnerships team responds within 48 hours.' })
+      reset()
+    } catch (err) {
+      setStatus({ state: 'error', message: err.message || 'Could not submit. Please try again.' })
+    }
   }
 
   return (
@@ -334,8 +357,19 @@ function Partner() {
                 <textarea {...register('message')} rows={4} className={inputCls} placeholder="Tell us about your CSR objectives..." />
               </Field>
               <div className="sm:col-span-2">
-                <Button type="submit" variant="primary" className="w-full">Send Enquiry <ArrowRight className="w-4 h-4" /></Button>
-                {isSubmitSuccessful && <p className="text-green-600 text-sm mt-2 text-center">Enquiry sent — thank you!</p>}
+                {status.state === 'success' && (
+                  <div className="flex items-center gap-2 p-3 mb-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm">
+                    <CheckCircle2 className="w-5 h-5 flex-shrink-0" /> {status.message}
+                  </div>
+                )}
+                {status.state === 'error' && (
+                  <div className="flex items-center gap-2 p-3 mb-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                    <AlertCircle className="w-5 h-5 flex-shrink-0" /> {status.message}
+                  </div>
+                )}
+                <Button type="submit" variant="primary" className="w-full" disabled={submitting}>
+                  {submitting ? 'Sending…' : <>Send Enquiry <ArrowRight className="w-4 h-4" /></>}
+                </Button>
               </div>
             </motion.form>
           </div>

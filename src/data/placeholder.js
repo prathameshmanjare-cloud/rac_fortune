@@ -240,6 +240,34 @@ export const recognitions = [
   { label: '8+ Years', sub: 'Of Verified Service' },
 ]
 
+// ============================================================
+// TEAM — Core Team & Board of Directors (2024-25)
+// PLACEHOLDER - add photos to /public/images/team/ and set `photo`
+// ============================================================
+export const coreTeam = [
+  { name: 'Rtr. Piyusha', role: 'IPP', title: 'Immediate Past President', photo: null },
+  { name: 'Rtr. Prathamesh', role: 'President', title: 'President', photo: null },
+  { name: 'Rtr. Purva', role: 'Vice-President', title: 'Vice-President', photo: null },
+  { name: 'Rtr. Miheeka', role: 'Secretary', title: 'Secretary', photo: null },
+  { name: 'Rtr. Vidhi', role: 'Joint Secretary', title: 'Joint Secretary', photo: null },
+  { name: 'Rtr. Sanjyot', role: 'Treasurer', title: 'Treasurer', photo: null },
+  { name: 'Rtr. Omkar', role: 'Financial Advisor', title: 'Financial Advisor', photo: null },
+]
+
+export const boardOfDirectors = [
+  { name: 'To Be Announced', role: 'CMD + DEI', title: 'Club Master Director & DEI', photo: null }, // PLACEHOLDER - name pending
+  { name: 'Rtr. Vidhi', role: 'PDD', title: 'Professional Development Director', photo: null },
+  { name: 'Rtr. Neel', role: 'CSD', title: 'Community Service Director', photo: null },
+  { name: 'Rtr. Anuj', role: 'ISD', title: 'International Service Director', photo: null },
+  { name: 'Rtr. Harshal', role: 'Co-ISD', title: 'Co-International Service Director', photo: null },
+  { name: 'Rtr. Darshana', role: 'Editor', title: 'Editor', photo: null },
+  { name: 'Rtr. Digvijay', role: 'PRO', title: 'Public Relations Officer', photo: null },
+  { name: 'Rtr. Neel', role: 'Co-PRO', title: 'Co-Public Relations Officer', photo: null },
+  { name: 'Rtr. Anuj', role: 'WRWC', title: 'WRWC', photo: null },
+  { name: 'Rtr. Vaibhav', role: 'RRRO + IRRO', title: 'RRRO & IRRO', photo: null },
+  { name: 'Rtr. Jayesh', role: 'SAA', title: 'Sergeant-at-Arms', photo: null },
+]
+
 // CSR enquiry form options
 export const csrBudgetRanges = ['Under ₹50,000', '₹50,000 – ₹1 Lakh', '₹1 – 3 Lakh', '₹3 – 5 Lakh', '₹5 Lakh+']
 export const csrInterestAreas = ['Education', 'Health', 'Environment', 'Skill Development', 'Women Empowerment', 'Community Welfare', 'Multiple / Not Sure']

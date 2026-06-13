@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
-import { ChevronRight, ChevronDown, ChevronUp, User, Users, Award, Star } from 'lucide-react'
+import { ChevronRight, ChevronDown, ChevronUp, User, Users, Award, Star, CheckCircle2, AlertCircle } from 'lucide-react'
 
 import Button from '../components/shared/Button'
+
+const interestAreas = ['Community Service', 'Professional Development', 'Environment', 'Education', 'Health', 'Public Relations / Media', 'Events & Fundraising', 'Not Sure Yet']
 
 const valueProps = [
   {
@@ -57,12 +59,34 @@ const faqs = [
 
 function JoinUs() {
   const [expandedFaq, setExpandedFaq] = useState(null)
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const [status, setStatus] = useState({ state: 'idle', message: '' }) // idle | submitting | success | error
+  const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
-  const onSubmit = (data) => {
-    console.log(data)
-    alert('Application submitted! We will contact you soon.')
+  const onSubmit = async (data) => {
+    setStatus({ state: 'submitting', message: '' })
+    try {
+      const res = await fetch('/api/join-us', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: data.full_name,
+          email: data.email,
+          phone: data.phone,
+          college_or_organization: data.college_or_organization,
+          why_join: data.why_join,
+          area_of_interest: data.area_of_interest,
+        }),
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok || !json.ok) throw new Error(json.error || 'Something went wrong.')
+      setStatus({ state: 'success', message: 'Application submitted! Our team will reach out soon.' })
+      reset()
+    } catch (err) {
+      setStatus({ state: 'error', message: err.message || 'Could not submit. Please try again.' })
+    }
   }
+
+  const submitting = status.state === 'submitting'
 
   return (
     <>
@@ -223,11 +247,11 @@ function JoinUs() {
                   Full Name
                 </label>
                 <input
-                  {...register('name', { required: true })}
+                  {...register('full_name', { required: true })}
                   className="w-full px-4 py-3 border border-neutral-dark rounded-lg focus:outline-none focus:border-primary"
                   placeholder="Your name"
                 />
-                {errors.name && (
+                {errors.full_name && (
                   <span className="text-red-500 text-sm">Name is required</span>
                 )}
               </div>
@@ -264,21 +288,57 @@ function JoinUs() {
 
               <div>
                 <label className="block text-sm font-medium text-secondary mb-2">
+                  College / Organization
+                </label>
+                <input
+                  {...register('college_or_organization')}
+                  className="w-full px-4 py-3 border border-neutral-dark rounded-lg focus:outline-none focus:border-primary"
+                  placeholder="Where you study or work"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-secondary mb-2">
+                  Area of Interest
+                </label>
+                <select
+                  {...register('area_of_interest')}
+                  defaultValue=""
+                  className="w-full px-4 py-3 border border-neutral-dark rounded-lg focus:outline-none focus:border-primary bg-white"
+                >
+                  <option value="" disabled>Select an avenue</option>
+                  {interestAreas.map((a) => <option key={a} value={a}>{a}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-secondary mb-2">
                   Why do you want to join?
                 </label>
                 <textarea
-                  {...register('reason', { required: true })}
+                  {...register('why_join', { required: true })}
                   rows={4}
                   className="w-full px-4 py-3 border border-neutral-dark rounded-lg focus:outline-none focus:border-primary"
                   placeholder="Tell us about yourself..."
                 />
-                {errors.reason && (
+                {errors.why_join && (
                   <span className="text-red-500 text-sm">This field is required</span>
                 )}
               </div>
 
-              <Button type="submit" variant="primary" className="w-full">
-                Submit Application
+              {status.state === 'success' && (
+                <div className="flex items-center gap-2 p-4 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm">
+                  <CheckCircle2 className="w-5 h-5 flex-shrink-0" /> {status.message}
+                </div>
+              )}
+              {status.state === 'error' && (
+                <div className="flex items-center gap-2 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                  <AlertCircle className="w-5 h-5 flex-shrink-0" /> {status.message}
+                </div>
+              )}
+
+              <Button type="submit" variant="primary" className="w-full" disabled={submitting}>
+                {submitting ? 'Submitting…' : 'Submit Application'}
               </Button>
             </form>
           </div>

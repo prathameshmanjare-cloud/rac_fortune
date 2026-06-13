@@ -7,6 +7,7 @@ import LogoSvg from '../../../logo.svg'
 const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
+  { name: 'Team', path: '/team' },
   { name: 'Projects', path: '/projects' },
   { name: 'Calendar', path: '/calendar' },
   { name: 'Join Us', path: '/join' },

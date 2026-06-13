@@ -10,6 +10,7 @@ import PageTransition from './components/layout/PageTransition'
 
 import Home from './pages/Home'
 import About from './pages/About'
+import Team from './pages/Team'
 import Projects from './pages/Projects'
 import Calendar from './pages/Calendar'
 import JoinUs from './pages/JoinUs'
@@ -17,6 +18,7 @@ import Partner from './pages/Partner'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
 import Upcoming from './pages/Upcoming'
+import Admin from './pages/Admin'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -37,12 +39,14 @@ function App() {
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/team" element={<Team />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/join" element={<JoinUs />} />
               <Route path="/partner" element={<Partner />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           </PageTransition>
         </AnimatePresence>
