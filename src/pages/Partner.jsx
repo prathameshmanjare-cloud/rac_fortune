@@ -357,6 +357,23 @@ function Partner() {
                 <textarea {...register('message')} rows={4} className={inputCls} placeholder="Tell us about your CSR objectives..." />
               </Field>
               <div className="sm:col-span-2">
+                <label className="flex items-start gap-3 text-sm text-secondary-light cursor-pointer">
+                  <input
+                    type="checkbox"
+                    {...register('consent', { required: true })}
+                    className="mt-0.5 w-4 h-4 accent-primary flex-shrink-0"
+                  />
+                  <span>
+                    I consent to Rotaract Club of Pune City Fortune storing and processing the
+                    information provided, for the purpose of this enquiry and related communication.
+                  </span>
+                </label>
+                {errors.consent && (
+                  <span className="text-red-500 text-xs mt-1 block">You must consent to proceed</span>
+                )}
+              </div>
+
+              <div className="sm:col-span-2">
                 {status.state === 'success' && (
                   <div className="flex items-center gap-2 p-3 mb-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm">
                     <CheckCircle2 className="w-5 h-5 flex-shrink-0" /> {status.message}
